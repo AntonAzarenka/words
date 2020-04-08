@@ -3,6 +3,7 @@ package com.azarenka.englishwords.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ public class Receivables implements Serializable {
 
     private Contributor contributor;
     private BigDecimal totalAmount;
-    private Map<Map<LocalDate, BigDecimal>, String> amounts = new HashMap<>();
+    private Map<Map<LocalDateTime, BigDecimal>, String> amounts = new HashMap<>();
 
     public Contributor getContributor() {
         return contributor;
@@ -28,11 +29,11 @@ public class Receivables implements Serializable {
         this.totalAmount = totalAmount;
     }
 
-    public Map<Map<LocalDate, BigDecimal>, String> getAmounts() {
+    public Map<Map<LocalDateTime, BigDecimal>, String> getAmounts() {
         return amounts;
     }
 
-    public void setAmounts(Map<Map<LocalDate, BigDecimal>, String> amounts) {
+    public void setAmounts(Map<Map<LocalDateTime, BigDecimal>, String> amounts) {
         this.amounts = amounts;
     }
 

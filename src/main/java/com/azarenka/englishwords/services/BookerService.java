@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
@@ -34,6 +35,7 @@ public class BookerService {
             Receivables receivables = findReceivables(contributor);
             if (null != receivables) {
                 setAmountsForContributor(receivables, word, money);
+                receivables.setContributor(contributor);
             } else {
                 receivables = new Receivables();
                 setAmountsForContributor(receivables, word, money);
@@ -72,9 +74,9 @@ public class BookerService {
     private Receivables createReceivable(Contributor contributor, String word, int money) {
         Receivables receivables = new Receivables();
         receivables.setContributor(contributor);
-        Map<Map<LocalDate, BigDecimal>, String> amounts = new HashMap<>();
-        Map<LocalDate, BigDecimal> innerMap = new HashMap<>();
-        innerMap.put(LocalDate.now(), new BigDecimal(money));
+        Map<Map<LocalDateTime, BigDecimal>, String> amounts = new HashMap<>();
+        Map<LocalDateTime, BigDecimal> innerMap = new HashMap<>();
+        innerMap.put(LocalDateTime.now(), new BigDecimal(money));
         amounts.put(innerMap, word);
         receivables.setAmounts(amounts);
         BigDecimal totalAmount = new BigDecimal(money).divide(new BigDecimal("100"));
@@ -88,29 +90,24 @@ public class BookerService {
 
     private void setAmountsForContributor(Receivables receivable, String word, int money) {
         BigDecimal totalAmount = BigDecimal.ZERO;
-        Map<Map<LocalDate, BigDecimal>, String> amounts = receivable.getAmounts();
-        Map<LocalDate, BigDecimal> tempMap = new HashMap<>();
-        tempMap.put(LocalDate.now(), new BigDecimal(money));
+        Map<Map<LocalDateTime, BigDecimal>, String> amounts = receivable.getAmounts();
+        Map<LocalDateTime, BigDecimal> tempMap = new HashMap<>();
+        tempMap.put(LocalDateTime.now(), new BigDecimal(money));
         amounts.put(tempMap, word);
-        for (Map.Entry<Map<LocalDate, BigDecimal>, String> pair : amounts.entrySet()) {
-            Map<LocalDate, BigDecimal> innerMap = pair.getKey();
+        for (Map.Entry<Map<LocalDateTime, BigDecimal>, String> pair : amounts.entrySet()) {
+            Map<LocalDateTime, BigDecimal> innerMap = pair.getKey();
             totalAmount = totalAmount.add(getCurrentValue(innerMap));
         }
         receivable.setTotalAmount(totalAmount);
     }
 
-    private BigDecimal getCurrentValue(Map<LocalDate, BigDecimal> map) {
+    private BigDecimal getCurrentValue(Map<LocalDateTime, BigDecimal> map) {
         BigDecimal totalAmount = BigDecimal.ZERO;
-        for (Map.Entry<LocalDate, BigDecimal> innerPair : map.entrySet()) {
+        for (Map.Entry<LocalDateTime, BigDecimal> innerPair : map.entrySet()) {
             totalAmount = totalAmount.add(innerPair.getValue());
         }
         totalAmount = totalAmount.divide(new BigDecimal("100"));
         return totalAmount;
-    }
-
-    private String calculateOutcomeForUser(Receivables receivable) {
-        Map<Map<LocalDate, BigDecimal>, String> amounts = receivable.getAmounts();
-        return "";
     }
 
     public String getOutcome() {
@@ -118,9 +115,9 @@ public class BookerService {
         BigDecimal outcome = BigDecimal.ZERO;
         if (receivablesList.size() > 0) {
             for (Receivables element : receivablesList) {
-                Map<Map<LocalDate, BigDecimal>, String> amounts = element.getAmounts();
-                for (Map.Entry<Map<LocalDate, BigDecimal>, String> pair : amounts.entrySet()) {
-                    Map<LocalDate, BigDecimal> innerMap = pair.getKey();
+                Map<Map<LocalDateTime, BigDecimal>, String> amounts = element.getAmounts();
+                for (Map.Entry<Map<LocalDateTime, BigDecimal>, String> pair : amounts.entrySet()) {
+                    Map<LocalDateTime, BigDecimal> innerMap = pair.getKey();
                     outcome = outcome.add(getCurrentValue(innerMap));
                 }
             }

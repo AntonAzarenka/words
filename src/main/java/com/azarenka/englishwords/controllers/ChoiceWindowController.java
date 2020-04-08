@@ -76,8 +76,7 @@ public class ChoiceWindowController {
 
     public void comboAction() {
         languageComboBox.valueProperty().addListener(
-                (ObservableValue<? extends Language> observable, Language oldValue, Language newValue) -> {
-                });
+                (ObservableValue<? extends Language> observable, Language oldValue, Language newValue) -> {});
     }
 
     public void rightAnswer() {
@@ -118,7 +117,7 @@ public class ChoiceWindowController {
 
     public void addMoneyForWrongPronunciation(){
         showMoney.setText(String.valueOf(10));
-        provider.getBookerService().setReceivable(contributorComboBox.getValue(), wordField.getText(), 10);
+        provider.getBookerService().setReceivable(contributorComboBox.getValue(), "pronunciation", 10);
     }
 
     public void statistic() {

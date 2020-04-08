@@ -54,8 +54,6 @@ public class Randomizer {
 
     public int getAmount() {
         int rnd = (int) (Math.random() * maxAmount);
-        return rnd > 10
-                ? rnd
-                : 50;
+        return rnd > 10 ? rnd : 50;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Component
@@ -20,7 +21,7 @@ public class ReceivablesLoader {
         ObjectInputStream objectInputStream = null;
         Set<Receivables> receivables = new HashSet<>();
         try {
-            fileInputStream = new FileInputStream(resource.getFilename());
+            fileInputStream = new FileInputStream(Objects.requireNonNull(resource.getFilename()));
             objectInputStream = new ObjectInputStream(fileInputStream);
             receivables = (Set<Receivables>) objectInputStream.readObject();
             objectInputStream.close();
@@ -35,7 +36,7 @@ public class ReceivablesLoader {
         FileOutputStream fileOutputStream;
         ObjectOutputStream objectOutputStream;
         try {
-            fileOutputStream = new FileOutputStream(resource.getFilename());
+            fileOutputStream = new FileOutputStream(Objects.requireNonNull(resource.getFilename()));
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(receivablesList);
             objectOutputStream.close();
