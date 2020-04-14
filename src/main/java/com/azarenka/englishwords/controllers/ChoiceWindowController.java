@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,7 +59,7 @@ public class ChoiceWindowController {
 
     public void initialize() {
         loadData();
-        languageComboBox.setValue(Language.EN);
+        languageComboBox.setValue(Language.ALL);
         contributorComboBox.setOnAction(event -> reset());
     }
 
@@ -71,7 +72,7 @@ public class ChoiceWindowController {
         showMoney.setText(StringUtils.EMPTY);
         wordTranslate.setText(StringUtils.EMPTY);
         imageView.setImage(null);
-        answer();
+        startTimer();
     }
 
     public void comboAction() {
@@ -88,6 +89,7 @@ public class ChoiceWindowController {
     }
 
     public void reset() {
+        task.cancel();
         provider.getAnswerMemory().reset(listView);
         provider.getRandomizer().reset();
         wordField.setText(StringUtils.EMPTY);
@@ -115,7 +117,7 @@ public class ChoiceWindowController {
         }
     }
 
-    public void addMoneyForWrongPronunciation(){
+    public void addMoneyForWrongPronunciation() {
         showMoney.setText(String.valueOf(10));
         provider.getBookerService().setReceivable(contributorComboBox.getValue(), "pronunciation", 10);
     }
@@ -131,20 +133,30 @@ public class ChoiceWindowController {
     }
 
     public void loadData() {
-        languageComboBox.setItems(FXCollections.observableArrayList(Language.EN, Language.RU));
+        languageComboBox.setItems(FXCollections.observableArrayList(Language.values()));
         contributorComboBox.setItems(FXCollections.observableArrayList(provider.getContributorParser().getContributors()));
         contributorComboBox.setValue(provider.getContributorParser().getContributors().get(0));
     }
 
-    private void answer() {
+    public void secondAttempt(){
+        showMoney.setText(String.valueOf(100));
+        provider.getBookerService().setReceivable(contributorComboBox.getValue(), "second attempt", 100);
+    }
+
+    private void startTimer() {
         task = new Task<AtomicBoolean>() {
             @Override
             public AtomicBoolean call() throws InterruptedException {
+                timer.setTextFill(Paint.valueOf("BLACK"));
                 for (int i = 15; i >= 0; i--) {
                     if (isCancelled()) {
+                        Thread.currentThread().interrupt();
                         break;
                     }
                     this.updateMessage(i + "");
+                    if (i == 5) {
+                        timer.setTextFill(Paint.valueOf("RED"));
+                    }
                     Thread.sleep(1000);
                 }
                 return null;
