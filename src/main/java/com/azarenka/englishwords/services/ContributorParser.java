@@ -23,14 +23,10 @@ public class ContributorParser {
     private Contributor createContributor(String str) {
         Contributor contributor = new Contributor();
         String[] strings = str.split(",");
-        if (validate(strings)) {
+        if (strings.length == 2) {
             contributor.setFirstName(strings[0]);
             contributor.setLastName(strings[1]);
         }
         return contributor;
-    }
-
-    private boolean validate(String[] str) {
-        return str.length == 2;
     }
 }

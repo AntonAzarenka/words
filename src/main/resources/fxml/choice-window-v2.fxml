@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.azarenka.englishwords.controllers.ChoiceWindowController">
+   <children>
+      <Pane id="pane" layoutY="-1.0" opacity="0.67" prefHeight="207.0" prefWidth="1280.0" style="-fx-background-color: #39A67F;" stylesheets="@../css/words.css">
+         <children>
+            <Label layoutX="22.0" layoutY="141.0" prefHeight="17.0" prefWidth="150.0" text="Жертва">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font></Label>
+            <Label layoutX="1221.0" layoutY="141.0" text="Язык">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="12.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="contributorComboBox" layoutX="5.0" layoutY="171.0" prefHeight="25.0" prefWidth="177.0" />
+            <JFXComboBox fx:id="languageComboBox" layoutX="1180.0" layoutY="171.0" prefHeight="25.0" prefWidth="82.0" />
+            <Label layoutX="69.0" layoutY="30.0" prefHeight="70.0" prefWidth="508.0" text="DISTRIBUTION WORDS" underline="true">
+               <font>
+                  <Font name="MS PGothic" size="48.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <AnchorPane layoutX="188.0" layoutY="115.0" prefHeight="597.0" prefWidth="974.0" style="-fx-background-color: #39A68F; -fx-background-radius: 10;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <TableView fx:id="tableView" cacheShape="false" centerShape="false" editable="true" focusTraversable="false" layoutX="14.0" layoutY="302.0" prefHeight="280.0" prefWidth="336.0" scaleShape="false" style="-fx-background-color: #39A68F;">
+              <columns>
+                <TableColumn fx:id="tableColumnWord" editable="false" prefWidth="171.0" sortable="false" style="-fx-background-color: #39A68F;" text="Слово" />
+                <TableColumn fx:id="tableColumnTranslate" editable="false" prefWidth="164.0" sortable="false" style="-fx-background-color: #39A68F;" text="Перевод" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </TableView>
+            <Label fx:id="wordTranslate" layoutX="23.0" layoutY="37.0" prefHeight="71.0" prefWidth="929.0" textFill="#9a6060">
+               <font>
+                  <Font size="49.0" />
+               </font>
+            </Label>
+            <Label fx:id="wordField" layoutX="29.0" layoutY="191.0" prefHeight="88.0" prefWidth="929.0" textFill="#0f1e4d">
+               <font>
+                  <Font size="49.0" />
+               </font>
+            </Label>
+            <Label fx:id="showMoney" alignment="CENTER" layoutX="366.0" layoutY="311.0" prefHeight="217.0" prefWidth="263.0">
+               <font>
+                  <Font size="96.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1ff6aa3" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="timer" alignment="CENTER" contentDisplay="CENTER" layoutX="729.0" layoutY="376.0" prefHeight="207.0" prefWidth="237.0" textAlignment="JUSTIFY">
+               <font>
+                  <Font size="96.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <JFXButton fx:id="statisticButton" layoutX="8.0" layoutY="207.0" onAction="#statistic" prefHeight="50.0" prefWidth="171.0" text="Копилка" />
+      <JFXButton fx:id="translateButton" layoutX="5.0" layoutY="455.0" onAction="#translate" prefHeight="50.0" prefWidth="177.0" text="Перевод" />
+      <JFXButton fx:id="randomButton" layoutX="9.0" layoutY="400.0" onAction="#getWord" prefHeight="50.0" prefWidth="171.0" text="Вытянуть" />
+      <JFXButton fx:id="rightButton" layoutX="9.0" layoutY="505.0" onAction="#rightAnswer" prefHeight="50.0" prefWidth="171.0" text="Верно" />
+      <JFXButton fx:id="payButton" layoutX="9.0" layoutY="555.0" onAction="#payMoney" prefHeight="50.0" prefWidth="171.0" text="Неверно" />
+      <JFXButton fx:id="wrongPronunciation" layoutX="9.0" layoutY="307.0" onAction="#addMoneyForWrongPronunciation" prefHeight="50.0" prefWidth="171.0" text="Произношение" />
+      <JFXButton fx:id="wrongPronunciation2" layoutX="9.0" layoutY="257.0" onAction="#badWords" prefHeight="50.0" prefWidth="171.0" text="МАТ" />
+      <JFXButton fx:id="secondAttempt" layoutX="8.0" layoutY="637.0" onAction="#secondAttempt" prefHeight="50.0" prefWidth="171.0" text="Вторая попытка" />
+   </children>
+</AnchorPane>

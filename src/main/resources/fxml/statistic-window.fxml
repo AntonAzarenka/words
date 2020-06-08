@@ -14,7 +14,6 @@
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="218.0" prefWidth="149.0">
                <children>
-                  <Button fx:id="buttonBack" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="72.0" text="Главная" />
                   <Button fx:id="words" layoutX="40.0" layoutY="263.0" mnemonicParsing="false" onAction="#choiceWords" prefHeight="25.0" prefWidth="152.0" text="Слова" />
                </children>
             </AnchorPane>

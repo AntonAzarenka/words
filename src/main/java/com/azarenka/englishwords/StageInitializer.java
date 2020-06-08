@@ -1,6 +1,7 @@
 package com.azarenka.englishwords;
 
 import com.azarenka.englishwords.MainApp.StageEvent;
+import com.azarenka.englishwords.windows.ChoiceWindow;
 import com.azarenka.englishwords.windows.MainWindow;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 public abstract class StageInitializer implements ApplicationListener<StageEvent> {
 
     @Autowired
-    protected MainWindow commonWindowsWidget;
+    protected ChoiceWindow commonWindowsWidget;
     private ApplicationContext applicationContext;
     static Stage stage;
 
@@ -26,7 +27,7 @@ public abstract class StageInitializer implements ApplicationListener<StageEvent
         stage = stageEvent.getStage();
 
         commonWindowsWidget.loadBean();
-        stage.setScene(commonWindowsWidget.getMain());
+        stage.setScene(commonWindowsWidget.getMainWindow());
         stage.setTitle("Distribution words");
         stage.setResizable(false);
         stage.show();

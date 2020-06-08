@@ -21,7 +21,7 @@ public abstract class CommonWindowsWidget {
         try {
             parent = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Не удалось загрузить fxml файл");
         }
         return parent;
     }
