@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class ChoiceWindow extends CommonWindowsWidget {
 
-    @Value(value = "classpath:fxml/choice-window.fxml")
+    @Value(value = "classpath:fxml/choice-window-v2.fxml")
     private Resource resource;
     private Scene mainWindow;
     private FXMLLoader choiseWidgetWindow;

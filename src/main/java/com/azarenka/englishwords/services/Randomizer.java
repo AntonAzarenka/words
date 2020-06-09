@@ -38,11 +38,11 @@ public class Randomizer {
         List<String> words;
         if (Language.ALL != language) {
             if (validateWordNumber()) {
-                 words = getWordsToTranslate(language);
+                words = getWordsToTranslate(language);
                 return words.get(wordNumber);
             }
         } else {
-            if(currentLanguage.equals(Language.EN)){
+            if (currentLanguage.equals(Language.EN)) {
                 words = getWordsToTranslate(Language.EN);
                 return words.get(wordNumber);
             } else {

@@ -3,99 +3,106 @@ package com.azarenka.englishwords.controllers;
 import com.azarenka.englishwords.SceneChanger;
 import com.azarenka.englishwords.domain.Contributor;
 import com.azarenka.englishwords.domain.Language;
+import com.azarenka.englishwords.domain.Report;
+import com.azarenka.englishwords.domain.Word;
 import com.azarenka.englishwords.services.ServiceProvider;
-import com.azarenka.englishwords.windows.MainWindow;
+import com.azarenka.englishwords.windows.LibraryWindow;
 import com.azarenka.englishwords.windows.StatisticWindow;
-import javafx.beans.value.ObservableValue;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Paint;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 public class ChoiceWindowController {
 
     @Autowired
-    private SceneChanger sceneChanger;
-    @Autowired
-    private MainWindow choiceWindow;
-    @Autowired
-    private StatisticWindow statisticWindow;
-    @Autowired
     private ServiceProvider provider;
     @Autowired
     private StatisticWindowController windowController;
-    @Value(value = "classpath:money.jpg")
-    Resource resource;
+    @Autowired
+    private SceneChanger sceneChanger;
+    @Autowired
+    private LibraryWindow libraryWindow;
+    @Autowired
+    private StatisticWindow statisticWindow;
     @FXML
-    public TextField wordField;
+    public JFXComboBox<Language> languageComboBox;
     @FXML
-    public ListView listView;
+    public JFXComboBox<Contributor> contributorComboBox;
     @FXML
-    public ComboBox<Language> languageComboBox;
-    @FXML
-    public ComboBox<Contributor> contributorComboBox;
+    public Label wordField;
     @FXML
     public Label wordTranslate;
     @FXML
-    public Label showMoney;
-    @FXML
     public Label timer;
     @FXML
-    public ImageView imageView;
+    public Label showMoney;
     @FXML
-    public Button rightButton;
+    public TableView<Word> tableView;
+    @FXML
+    public TableColumn tableColumnWord;
+    @FXML
+    public TableColumn tableColumnTranslate;
     private Task task;
+
+    @PostConstruct
+    private void init() {
+        statisticWindow.loadBean();
+        libraryWindow.loadBean();
+    }
 
     public void initialize() {
         loadData();
         languageComboBox.setValue(Language.ALL);
         contributorComboBox.setOnAction(event -> reset());
+        tableColumnWord.setCellValueFactory(new PropertyValueFactory<Word, String>("word"));
+        tableColumnTranslate.setCellValueFactory(new PropertyValueFactory<Report, String>("translate"));
     }
 
-    public void back() {
-        sceneChanger.setNewScene(choiceWindow.getMain());
+    public void loadData() {
+        languageComboBox.setItems(FXCollections.observableArrayList(Language.values()));
+        contributorComboBox.setItems(FXCollections.observableArrayList(provider.getContributorParser().getContributors()));
+        contributorComboBox.setValue(provider.getContributorParser().getContributors().get(0));
+    }
+
+    public void rightAnswer() {
+        if (!wordField.getText().isEmpty()) {
+            task.cancel();
+            provider.getAnswerMemory().setWord(wordField.getText(),
+                    provider.getRandomizer().getTranslate(languageComboBox.getValue()), tableView);
+            wordTranslate.setText(StringUtils.EMPTY);
+        }
+    }
+
+    public void payMoney() {
+        String word = wordField.getText();
+        if (!word.isEmpty()) {
+            task.cancel();
+            int money = provider.getRandomizer().getAmount();
+            showMoney.setText(String.valueOf(money));
+            provider.getAnswerMemory().setWord(wordField.getText(),
+                    provider.getRandomizer().getTranslate(languageComboBox.getValue()), tableView);
+            provider.getBookerService().setReceivable(contributorComboBox.getValue(), wordField.getText(), money);
+        }
     }
 
     public void getWord() {
         wordField.setText(provider.getRandomizer().getWord(languageComboBox.getValue()));
         showMoney.setText(StringUtils.EMPTY);
         wordTranslate.setText(StringUtils.EMPTY);
-        imageView.setImage(null);
         startTimer();
-    }
-
-    public void comboAction() {
-        languageComboBox.valueProperty().addListener(
-                (ObservableValue<? extends Language> observable, Language oldValue, Language newValue) -> {});
-    }
-
-    public void rightAnswer() {
-        if (!wordField.getText().isEmpty()) {
-            task.cancel();
-            provider.getAnswerMemory().setWord(listView, wordField.getText());
-            wordTranslate.setText(StringUtils.EMPTY);
-        }
-    }
-
-    public void reset() {
-        task.cancel();
-        provider.getAnswerMemory().reset(listView);
-        provider.getRandomizer().reset();
-        wordField.setText(StringUtils.EMPTY);
-        wordTranslate.setText(StringUtils.EMPTY);
-        showMoney.setText(StringUtils.EMPTY);
-        imageView.setImage(null);
     }
 
     public void translate() {
@@ -105,21 +112,30 @@ public class ChoiceWindowController {
         }
     }
 
-    public void payMoney() {
-        String word = wordField.getText();
-        if (!word.isEmpty()) {
+    public void reset() {
+        if (null != task) {
             task.cancel();
-            int money = provider.getRandomizer().getAmount();
-            loadImage();
-            showMoney.setText(String.valueOf(money));
-            provider.getAnswerMemory().setWord(listView, word);
-            provider.getBookerService().setReceivable(contributorComboBox.getValue(), wordField.getText(), money);
         }
+         provider.getAnswerMemory().reset(tableView);
+        provider.getRandomizer().reset();
+        wordField.setText(StringUtils.EMPTY);
+        wordTranslate.setText(StringUtils.EMPTY);
+        showMoney.setText(StringUtils.EMPTY);
     }
 
-    public void addMoneyForWrongPronunciation() {
-        showMoney.setText(String.valueOf(10));
-        provider.getBookerService().setReceivable(contributorComboBox.getValue(), "pronunciation", 10);
+    public void secondAttempt() {
+        showMoney.setText(String.valueOf(100));
+        provider.getAnswerMemory().setWord(wordField.getText(),
+                provider.getRandomizer().getTranslate(languageComboBox.getValue()), tableView);
+        provider.getBookerService().setReceivable(contributorComboBox.getValue(), "second attempt", 100);
+    }
+
+    public void badWords() {
+        int money = provider.getRandomizer().getAmount();
+        showMoney.setText(String.valueOf(money));
+        provider.getAnswerMemory().setWord(wordField.getText(),
+                provider.getRandomizer().getTranslate(languageComboBox.getValue()), tableView);
+        provider.getBookerService().setReceivable(contributorComboBox.getValue(), "fuck", money);
     }
 
     public void statistic() {
@@ -127,20 +143,9 @@ public class ChoiceWindowController {
         windowController.loadData();
     }
 
-    public void loadImage() {
-        Image image = new Image("money.jpg");
-        imageView.setImage(image);
-    }
-
-    public void loadData() {
-        languageComboBox.setItems(FXCollections.observableArrayList(Language.values()));
-        contributorComboBox.setItems(FXCollections.observableArrayList(provider.getContributorParser().getContributors()));
-        contributorComboBox.setValue(provider.getContributorParser().getContributors().get(0));
-    }
-
-    public void secondAttempt(){
-        showMoney.setText(String.valueOf(100));
-        provider.getBookerService().setReceivable(contributorComboBox.getValue(), "second attempt", 100);
+    public void addMoneyForWrongPronunciation() {
+        showMoney.setText(String.valueOf(10));
+        provider.getBookerService().setReceivable(contributorComboBox.getValue(), "pronunciation", 10);
     }
 
     private void startTimer() {

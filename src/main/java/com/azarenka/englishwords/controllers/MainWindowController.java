@@ -25,12 +25,12 @@ public class MainWindowController {
     @Autowired
     private ControllersProvider controllersProvider;
 
-    @PostConstruct
+  /*  @PostConstruct
     private void init() {
         choiceWindow.loadBean();
         statisticWindow.loadBean();
         libraryWindow.loadBean();
-    }
+    }*/
 
     public void addWords() {
         sceneChanger.setNewScene(libraryWindow.getMain());
