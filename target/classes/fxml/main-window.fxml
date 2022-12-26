@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="Undecorated" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.azarenka.words.controllers.MainController">
+   <children>
+      <Pane id="pane" opacity="0.67" prefHeight="207.0" prefWidth="1280.0" style="-fx-background-color: #48727D;" stylesheets="@../../../../../words/src/main/resources/css/words.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+         <children>
+            <Label layoutX="69.0" layoutY="30.0" prefHeight="70.0" prefWidth="452.0" text="DISTRIBUTION WORDS">
+               <font>
+                  <Font name="MS PGothic" size="48.0" />
+               </font>
+            </Label>
+            <AnchorPane disable="true" layoutX="1098.0" layoutY="4.0" />
+            <ImageView fx:id="addUser" fitHeight="50.0" fitWidth="50.0" layoutX="550.0" layoutY="40.0" onMouseClicked="#openParticipantsWindow" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ImageView>
+            <ImageView fx:id="addWordIcon" accessibleRole="BUTTON" fitHeight="50.0" fitWidth="50.0" layoutX="620.0" layoutY="40.0" onMouseClicked="#addWord" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ImageView>
+            <ImageView fx:id="statisticIcon" fitHeight="50.0" fitWidth="50.0" layoutX="690.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ImageView>
+            <ImageView fx:id="settingIcon" fitHeight="50.0" fitWidth="50.0" layoutX="770.0" layoutY="40.0" onMouseClicked="#openSetting" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="restartIcon" fitHeight="50.0" fitWidth="50.0" layoutX="840.0" layoutY="40.0" onMouseClicked="#restart" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="exitIcon" fitHeight="50.0" fitWidth="50.0" layoutX="910.0" layoutY="40.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </Pane>
+      <AnchorPane layoutX="188.0" layoutY="115.0" prefHeight="598.0" prefWidth="944.0" style="-fx-background-color: #6B96AD; -fx-background-radius: 5;" AnchorPane.bottomAnchor="87.0" AnchorPane.leftAnchor="188.0" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="115.0">
+         <children>
+            <TableView fx:id="tableView" cacheShape="false" centerShape="false" editable="true" focusTraversable="false" layoutX="14.0" layoutY="302.0" prefHeight="280.0" prefWidth="619.0" scaleShape="false" style="-fx-background-color: #88B4C4;" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="341.0" AnchorPane.topAnchor="302.0">
+              <columns>
+                <TableColumn fx:id="tableColumnWord" editable="false" prefWidth="171.0" sortable="false" style="-fx-background-color: #88B4C4;" text="Word" />
+                <TableColumn fx:id="tableColumnTranslate" editable="false" prefWidth="164.0" sortable="false" style="-fx-background-color: #88B4C4;" text="Translate" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </TableView>
+            <Label fx:id="wordTranslate" accessibleRole="IMAGE_VIEW" layoutX="14.0" layoutY="146.0" prefHeight="88.0" prefWidth="899.0" textFill="#9a6060" AnchorPane.bottomAnchor="364.0" AnchorPane.rightAnchor="30.799999999999955" AnchorPane.topAnchor="146.0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Label>
+            <Label fx:id="wordField" layoutX="10.0" layoutY="41.0" prefHeight="88.0" prefWidth="906.0" textFill="#0f1e4d" AnchorPane.bottomAnchor="487.0" AnchorPane.rightAnchor="27.600000000000023">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="timer" alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="414.0" prefHeight="153.0" prefWidth="202.0" textAlignment="JUSTIFY" AnchorPane.bottomAnchor="31.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="414.0">
+               <font>
+                  <Font size="96.0" />
+               </font>
+            </Label>
+            <Label fx:id="showMoney" layoutX="618.0" layoutY="505.0" prefHeight="62.0" prefWidth="88.0" AnchorPane.bottomAnchor="30.6" AnchorPane.rightAnchor="238.0" AnchorPane.topAnchor="505.0" />
+         </children>
+         <effect>
+            <DropShadow blurType="TWO_PASS_BOX" height="25.73" radius="10.0275" spread="0.09" width="16.38" />
+         </effect>
+      </AnchorPane>
+      <JFXButton fx:id="nextContributor" layoutX="9.0" layoutY="295.0" onMouseClicked="#nextContributor" prefHeight="43.0" prefWidth="171.0" text="Next" />
+      <JFXButton fx:id="translateButton" layoutX="5.0" layoutY="455.0" onMouseClicked="#translate" prefHeight="50.0" prefWidth="177.0" text="Transalte" />
+      <JFXButton fx:id="wordButton" layoutX="9.0" layoutY="400.0" onMouseClicked="#getWord" prefHeight="50.0" prefWidth="171.0" text="Word" />
+      <JFXButton fx:id="wrongButton" onMouseClicked="#wrong" layoutX="9.0" layoutY="586.0" prefWidth="171.0" text="Wrong" />
+      <JFXButton fx:id="secondAttempt" layoutX="8.0" layoutY="637.0" prefHeight="50.0" prefWidth="171.0" text="Second try" />
+      <Pane layoutX="1177.0" layoutY="207.0" prefHeight="116.0" prefWidth="143.0" AnchorPane.rightAnchor="-1.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="8.0" layoutY="5.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="116.0" snapToPixel="false" text="Language">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </Label>
+            <JFXComboBox fx:id="languageComboBox" layoutX="8.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="26.0" prefWidth="116.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="2.0" layoutY="207.0" prefHeight="88.0" prefWidth="178.0">
+         <children>
+            <Label layoutX="55.0" layoutY="12.0" prefHeight="17.0" prefWidth="116.0" text="Participant">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font></Label>
+            <JFXComboBox fx:id="contributorComboBox" layoutX="4.0" layoutY="44.0" prefHeight="25.0" prefWidth="171.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
