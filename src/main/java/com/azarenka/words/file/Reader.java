@@ -1,7 +1,5 @@
 package com.azarenka.words.file;
 
-import org.springframework.core.io.Resource;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;

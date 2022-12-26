@@ -1,11 +1,13 @@
 package com.azarenka.words.controllers;
 
-import com.azarenka.words.domain.*;
+import com.azarenka.words.domain.Language;
+import com.azarenka.words.domain.Options;
+import com.azarenka.words.domain.Participant;
+import com.azarenka.words.domain.Word;
 import com.azarenka.words.file.ResourceProvider;
 import com.azarenka.words.service.participants.ParticipantParser;
 import com.azarenka.words.service.util.Windows;
 import com.azarenka.words.service.word.IWordService;
-import com.google.common.collect.ImmutableMap;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
@@ -20,14 +22,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
-public class MainController extends CommonController{
+public class MainController extends CommonController {
 
     private MainControllerMediator mediator;
     private int time = 15;
@@ -108,25 +109,7 @@ public class MainController extends CommonController{
     }
 
     private void startTimer(int time) {
-        task = new Task<AtomicBoolean>() {
-            @Override
-            public AtomicBoolean call() throws InterruptedException {
-                timer.setTextFill(Paint.valueOf("BLACK"));
-                for (int i = time; i >= 0; i--) {
-                    if (isCancelled()) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-                    this.updateMessage(i + "");
-                    if (i == 5) {
-                        timer.setTextFill(Paint.valueOf("RED"));
-                    }
-                    Thread.sleep(1000);
-                }
-                wrong();
-                return null;
-            }
-        };
+        task = new Timer(time);
         timer.textProperty().bind(task.messageProperty());
         new Thread(task).start();
     }
@@ -158,9 +141,9 @@ public class MainController extends CommonController{
     public void wrong() {
         IWordService wordService = provider.getWordService();
         Word word = new Word(wordField.getText(), wordTranslate.getText());
-        Integer score = wordService.hasWordToday()? options.getDuplicateScore(): options.getWrongAnswerScore();
+        Integer score = wordService.hasWordToday() ? options.getDuplicateScore() : options.getWrongAnswerScore();
         Participant participant = contributorComboBox.getValue();
-        provider.getStatisticService().addStatistic(word, score, participant,false);
+        provider.getStatisticService().addStatistic(word, score, participant, false);
     }
 
     public void openSetting() {
@@ -212,5 +195,32 @@ public class MainController extends CommonController{
 
     public void addWord() {
         windowsChanger.showModalWindow(windowsProvider.getWordBookWindow());
+    }
+
+    private class Timer extends Task<AtomicBoolean> {
+
+        private int time = 0;
+
+        public Timer(int time) {
+            this.time = time;
+        }
+
+        @Override
+        protected AtomicBoolean call() throws Exception {
+            timer.setTextFill(Paint.valueOf("BLACK"));
+            for (int i = time; i >= 0; i--) {
+                if (isCancelled()) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+                this.updateMessage(String.valueOf(i));
+                if (i == 5) {
+                    timer.setTextFill(Paint.valueOf("RED"));
+                }
+                Thread.sleep(1000);
+            }
+            wrong();
+            return null;
+        }
     }
 }
