@@ -4,6 +4,15 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Represents of statistic domain object.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 public class Statistic implements Serializable {
 
     private Set<ParticipantInformation> contributorInformation;

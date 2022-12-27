@@ -4,13 +4,24 @@ import com.azarenka.words.controllers.CommonController;
 import com.azarenka.words.domain.Word;
 import com.azarenka.words.file.ResourceProvider;
 import com.azarenka.words.service.util.Windows;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+
+/**
+ * Represents of options controller.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class EditWordController extends CommonController {
 
@@ -32,7 +43,7 @@ public class EditWordController extends CommonController {
             words.add(new Word(wordTextField.getText(), translateTextField.getText()));
             provider.getWordService().save(words);
             provider.getRefreshService().setRefreshWordWindowProperty(
-                    !provider.getRefreshService().isRefreshWordWindowProperty());
+                !provider.getRefreshService().isRefreshWordWindowProperty());
             resetWindow();
             back();
         } else {

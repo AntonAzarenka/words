@@ -1,8 +1,18 @@
 package com.azarenka.words.service.trigger;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import org.springframework.stereotype.Component;
 
+import javafx.beans.property.SimpleBooleanProperty;
+
+/**
+ * Class for providing refresh windows.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class RefreshService {
 
@@ -38,6 +48,7 @@ public class RefreshService {
 
     /**
      * Sets new value
+     *
      * @param refreshMainWindowProperty
      */
     public void setRefreshMainWindowProperty(boolean refreshMainWindowProperty) {

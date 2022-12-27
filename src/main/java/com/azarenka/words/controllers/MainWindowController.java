@@ -10,14 +10,7 @@ import com.azarenka.words.service.util.Windows;
 import com.azarenka.words.service.word.IWordService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Paint;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -27,12 +20,32 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
+
+/**
+ * Represents of main window controller.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Controller
-public class MainController extends CommonController {
+public class MainWindowController extends CommonController {
 
     private MainControllerMediator mediator;
-    private int time = 15;
+    private int standardTime = 15;
+    private final int repeatableTime = 10;
     private Options options;
+    private Task<?> task;
 
     public JFXComboBox<Language> languageComboBox;
     public JFXComboBox<Participant> contributorComboBox;
@@ -55,7 +68,6 @@ public class MainController extends CommonController {
     public JFXButton nextContributor;
     public ImageView restartIcon;
 
-    private Task<?> task;
 
     protected void loadOptions() {
         options = provider.getOptionService().getOptions();
@@ -64,7 +76,7 @@ public class MainController extends CommonController {
         contributorComboBox.setValue(getParticipant(options));
         mediator.optionsChange(options);
         mediator.hasContributors(!options.getRandomParticipantFlag()
-                || provider.getParticipantParser().getContributors().size() == 0);
+            || provider.getParticipantParser().getContributors().size() == 0);
         mediator.setState(this);
     }
 
@@ -76,9 +88,9 @@ public class MainController extends CommonController {
         tableColumnWord.setCellValueFactory(new PropertyValueFactory<>("word"));
         tableColumnTranslate.setCellValueFactory(new PropertyValueFactory<>("translate"));
         mediator = new MainControllerMediator(wordButton, translateButton, wrongButton, secondAttempt, nextContributor,
-                languageComboBox, contributorComboBox);
+            languageComboBox, contributorComboBox);
         provider.getRefreshService().refreshMainWindowPropertyProperty().addListener(
-                (observableValue, aBoolean, t1) -> refresh());
+            (observableValue, aBoolean, t1) -> refresh());
     }
 
     public void refresh() {
@@ -90,7 +102,7 @@ public class MainController extends CommonController {
     @SuppressWarnings("unchecked")
     public void reset() {
         if (null != task) {
-            time = 15;
+            standardTime = 15;
             task.cancel();
         }
         wordField.setText(StringUtils.EMPTY);
@@ -104,7 +116,7 @@ public class MainController extends CommonController {
         wordField.setText(provider.getWordService().getWord(languageComboBox.getValue()));
         showMoney.setText(StringUtils.EMPTY);
         wordTranslate.setText(StringUtils.EMPTY);
-        startTimer(provider.getWordService().hasWordToday() ? 10 : 15);
+        startTimer(provider.getWordService().hasWordToday() ? repeatableTime : standardTime);
         mediator.setState(this);
     }
 
@@ -120,7 +132,8 @@ public class MainController extends CommonController {
             wordTranslate.setText(translate);
             task.cancel();
             if (!provider.getWordService().hasWordToday()) {
-                provider.getWordsTableManager().setItems(new Word(wordField.getText(), wordTranslate.getText()), tableView);
+                provider.getWordsTableManager()
+                    .setItems(new Word(wordField.getText(), wordTranslate.getText()), tableView);
             }
             mediator.setState(this);
         }

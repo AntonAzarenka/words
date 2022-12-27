@@ -6,9 +6,7 @@ import com.azarenka.words.service.participants.ParticipantService;
 import com.azarenka.words.service.util.Windows;
 import com.azarenka.words.windows.WindowsChanger;
 import com.azarenka.words.windows.WindowsProvider;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +14,19 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+/**
+ * Represents of edit user controller.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class EditUserController {
 
@@ -42,7 +53,7 @@ public class EditUserController {
     public void save() {
         ParticipantService participantService = provider.getParticipantService();
         List<Participant> participants = participantService.getParticipants();
-        if(!StringUtils.isEmpty(firstnameTextField.getText()) && !StringUtils.isEmpty(lastNameTextField.getText())) {
+        if (!StringUtils.isEmpty(firstnameTextField.getText()) && !StringUtils.isEmpty(lastNameTextField.getText())) {
             participants.remove(participant);
             Participant participant = new Participant();
             participant.setFirstName(firstnameTextField.getText());
@@ -50,7 +61,7 @@ public class EditUserController {
             participants.add(participant);
             provider.getParticipantService().save(participants);
             provider.getRefreshService().setRefreshUserWindowProperty(
-                    !provider.getRefreshService().isRefreshUserWindowProperty());
+                !provider.getRefreshService().isRefreshUserWindowProperty());
             resetWindow();
             back();
         } else {
@@ -66,7 +77,8 @@ public class EditUserController {
     }
 
     private void initIcons() throws IOException {
-        saveUserIcon.setImage(new Image(provider.getResourceProvider().getApplyImageResource().getURL().toExternalForm()));
+        saveUserIcon.setImage(
+            new Image(provider.getResourceProvider().getApplyImageResource().getURL().toExternalForm()));
         backIcon.setImage(new Image(provider.getResourceProvider().getBackImageResource().getURL().toExternalForm()));
     }
 

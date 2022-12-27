@@ -1,6 +1,8 @@
 package com.azarenka.words.file;
 
-import javafx.scene.image.Image;
+import com.azarenka.words.service.util.ApplicationUtil;
+
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -8,40 +10,66 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+import javafx.scene.image.Image;
+
+/**
+ * Represents of resource provider class.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class ResourceProvider {
 
-    private static final String PATH = "com/azarenka/words/icons/";
-    private static final String BASE_PATH = "classpath:";
+    private static final Logger LOGGER = ApplicationUtil.getLogger();
+    private static final String PATH = "${app.base_path}" + "${app.icons.path}";
 
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.add_user}")
+    @Value(PATH + "${app.icon.file_name.add_user}")
     private Resource addUserImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.add_word}")
+    @Value(PATH + "${app.icon.file_name.add_word}")
     private Resource addWordImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.statistic}")
+    @Value(PATH + "${app.icon.file_name.statistic}")
     private Resource statisticImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.setting}")
+    @Value(PATH + "${app.icon.file_name.setting}")
     private Resource settingImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.back}")
+    @Value(PATH + "${app.icon.file_name.back}")
     private Resource backImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.apply}")
+    @Value(PATH + "${app.icon.file_name.apply}")
     private Resource applyImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.reject}")
+    @Value(PATH + "${app.icon.file_name.reject}")
     private Resource rejectImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.restore}")
+    @Value(PATH + "${app.icon.file_name.restore}")
     private Resource restoreImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.add}")
+    @Value(PATH + "${app.icon.file_name.add}")
     private Resource addImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.remove}")
+    @Value(PATH + "${app.icon.file_name.remove}")
     private Resource removeImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.edit}")
+    @Value(PATH + "${app.icon.file_name.edit}")
     private Resource editImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.restart}")
+    @Value(PATH + "${app.icon.file_name.restart}")
     private Resource restartImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.exit}")
+    @Value(PATH + "${app.icon.file_name.exit}")
     private Resource exitImageResource;
-    @Value(BASE_PATH + PATH + "${app.icon.file_name.load_file}")
+    @Value(PATH + "${app.icon.file_name.load_file}")
     private Resource loadFileImageResource;
+
+    /**
+     * Returns instance of {@link Image}.
+     *
+     * @param supplier suplier
+     * @return image
+     */
+    public Image getImage(Supplier<Resource> supplier) {
+        try {
+            return new Image(supplier.get().getURL().toExternalForm());
+        } catch (IOException e) {
+            LOGGER.error("Can not read an image: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 
     public Resource getAddUserImageResource() {
         return addUserImageResource;
@@ -97,14 +125,5 @@ public class ResourceProvider {
 
     public Resource getLoadFileImageResource() {
         return loadFileImageResource;
-    }
-
-    public Image getImage(Supplier<Resource> supplier){
-        try {
-            return new Image(supplier.get().getURL().toExternalForm());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-            //TODO add logger
-        }
     }
 }

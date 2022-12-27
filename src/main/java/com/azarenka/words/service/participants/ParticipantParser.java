@@ -8,6 +8,15 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+/**
+ * Represents of participant parser class.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class ParticipantParser {
 

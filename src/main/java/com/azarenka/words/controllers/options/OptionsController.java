@@ -8,10 +8,7 @@ import com.azarenka.words.windows.WindowsChanger;
 import com.azarenka.words.windows.WindowsProvider;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.collections.FXCollections;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +16,20 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+/**
+ * Represents of options controller.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class OptionsController {
 
@@ -49,7 +60,7 @@ public class OptionsController {
 
     public void back() {
         provider.getRefreshService().setRefreshMainWindowProperty(
-                !provider.getRefreshService().isRefreshMainWindowProperty());
+            !provider.getRefreshService().isRefreshMainWindowProperty());
         windowsChanger.closeWindow(windowsProvider.getOptionsWindow());
     }
 
@@ -58,7 +69,7 @@ public class OptionsController {
         if (Objects.nonNull(options)) {
             provider.getOptionService().updateOptions(buildOptions());
             provider.getRefreshService().setRefreshMainWindowProperty(
-                    !provider.getRefreshService().isRefreshMainWindowProperty());
+                !provider.getRefreshService().isRefreshMainWindowProperty());
             Windows.showNotificationWindow("Save Options", "Game will restart", "After saving the game will reloaded");
             back();
         }
@@ -76,14 +87,14 @@ public class OptionsController {
         Options options = null;
         if (validate()) {
             options = new Options(
-                    randomParticipantsCheckbox.isSelected(),
-                    randomLangCheckbox.isSelected(),
-                    defaultLanguageCombobox.getValue(),
-                    Integer.parseInt(rightAnswerTexField.getText()),
-                    Integer.parseInt(wrongAnswerTextField.getText()),
-                    Integer.parseInt(secondAttemptTextField.getText()),
-                    Integer.parseInt(wrongAnswerDuplicateTextField.getText()),
-                    Integer.parseInt(maxCountWords.getText())
+                randomParticipantsCheckbox.isSelected(),
+                randomLangCheckbox.isSelected(),
+                defaultLanguageCombobox.getValue(),
+                Integer.parseInt(rightAnswerTexField.getText()),
+                Integer.parseInt(wrongAnswerTextField.getText()),
+                Integer.parseInt(secondAttemptTextField.getText()),
+                Integer.parseInt(wrongAnswerDuplicateTextField.getText()),
+                Integer.parseInt(maxCountWords.getText())
             );
         }
         return options;
@@ -122,7 +133,9 @@ public class OptionsController {
     private void initIcons() throws IOException {
         backIcon.setImage(new Image(provider.getResourceProvider().getBackImageResource().getURL().toExternalForm()));
         saveIcon.setImage(new Image(provider.getResourceProvider().getApplyImageResource().getURL().toExternalForm()));
-        rejectIcon.setImage(new Image(provider.getResourceProvider().getRejectImageResource().getURL().toExternalForm()));
-        restoreIcon.setImage(new Image(provider.getResourceProvider().getRestoreImageResource().getURL().toExternalForm()));
+        rejectIcon.setImage(
+            new Image(provider.getResourceProvider().getRejectImageResource().getURL().toExternalForm()));
+        restoreIcon.setImage(
+            new Image(provider.getResourceProvider().getRestoreImageResource().getURL().toExternalForm()));
     }
 }

@@ -6,6 +6,15 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Represents of participant information domain object.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 public class ParticipantInformation implements Serializable {
 
     private Participant participant;
@@ -17,7 +26,8 @@ public class ParticipantInformation implements Serializable {
     public ParticipantInformation() {
     }
 
-    public ParticipantInformation(Participant participant, Integer wordsCount, Integer wordWrongCount, List<ParticipantWordStatistic> wordStatistics, Integer totalScore) {
+    public ParticipantInformation(Participant participant, Integer wordsCount, Integer wordWrongCount,
+                                  List<ParticipantWordStatistic> wordStatistics, Integer totalScore) {
         this.participant = participant;
         this.wordsCount = wordsCount;
         this.wordWrongCount = wordWrongCount;
@@ -67,30 +77,31 @@ public class ParticipantInformation implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ParticipantInformation that = (ParticipantInformation) o;
-
         return new EqualsBuilder()
-                .append(participant, that.participant)
-                .append(wordsCount, that.wordsCount)
-                .append(wordWrongCount, that.wordWrongCount)
-                .append(wordStatistics, that.wordStatistics)
-                .append(totalScore, that.totalScore)
-                .isEquals();
+            .append(participant, that.participant)
+            .append(wordsCount, that.wordsCount)
+            .append(wordWrongCount, that.wordWrongCount)
+            .append(wordStatistics, that.wordStatistics)
+            .append(totalScore, that.totalScore)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(participant)
-                .append(wordsCount)
-                .append(wordWrongCount)
-                .append(wordStatistics)
-                .append(totalScore)
-                .toHashCode();
+            .append(participant)
+            .append(wordsCount)
+            .append(wordWrongCount)
+            .append(wordStatistics)
+            .append(totalScore)
+            .toHashCode();
     }
 
 }

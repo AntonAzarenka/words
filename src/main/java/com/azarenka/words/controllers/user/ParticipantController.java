@@ -5,16 +5,27 @@ import com.azarenka.words.service.ServiceProvider;
 import com.azarenka.words.service.util.Windows;
 import com.azarenka.words.windows.WindowsChanger;
 import com.azarenka.words.windows.WindowsProvider;
-import javafx.collections.FXCollections;
-import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+/**
+ * Represents of participant controller.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class ParticipantController {
 
@@ -37,18 +48,18 @@ public class ParticipantController {
         initIcons();
         loadData();
         provider.getRefreshService().refreshUserWindowPropertyProperty().addListener(
-                (observableValue, aBoolean, t1) -> refresh());
+            (observableValue, aBoolean, t1) -> refresh());
     }
 
     public void back() {
         provider.getRefreshService().setRefreshMainWindowProperty(
-                !provider.getRefreshService().isRefreshMainWindowProperty());
+            !provider.getRefreshService().isRefreshMainWindowProperty());
         windowsChanger.closeWindow(windowsProvider.getParticipantsWindow());
     }
 
     public void add() {
         provider.getRefreshService().setRefreshMainWindowProperty(
-                !provider.getRefreshService().isRefreshMainWindowProperty());
+            !provider.getRefreshService().isRefreshMainWindowProperty());
         windowsChanger.showModalWindow(windowsProvider.getCreateUserWindow());
     }
 
@@ -62,13 +73,15 @@ public class ParticipantController {
 
     private void loadData() {
         usersList.setItems(FXCollections.observableList(provider.getParticipantService().getParticipants().stream()
-                .map(e -> String.format("%s %s", e.getFirstName(), e.getLastName())).collect(Collectors.toList())));
+            .map(e -> String.format("%s %s", e.getFirstName(), e.getLastName())).collect(Collectors.toList())));
     }
 
     private void initIcons() throws IOException {
         addUserIcon.setImage(new Image(provider.getResourceProvider().getAddImageResource().getURL().toExternalForm()));
-        removeUserIcon.setImage(new Image(provider.getResourceProvider().getRemoveImageResource().getURL().toExternalForm()));
-        editUserIcon.setImage(new Image(provider.getResourceProvider().getEditImageResource().getURL().toExternalForm()));
+        removeUserIcon.setImage(
+            new Image(provider.getResourceProvider().getRemoveImageResource().getURL().toExternalForm()));
+        editUserIcon.setImage(
+            new Image(provider.getResourceProvider().getEditImageResource().getURL().toExternalForm()));
         backIcon.setImage(new Image(provider.getResourceProvider().getBackImageResource().getURL().toExternalForm()));
     }
 
@@ -93,12 +106,12 @@ public class ParticipantController {
                 openEditWindow(participant);
             } else {
                 Windows.showErrorWindow(
-                        "UnkownError", "Some problem with the name", "You have to rich out to support");
+                    "UnkownError", "Some problem with the name", "You have to rich out to support");
             }
         }
     }
 
-    private void openEditWindow(Participant participant){
+    private void openEditWindow(Participant participant) {
         editUserController.loadData(participant);
         windowsChanger.showModalWindow(windowsProvider.getEditUserWindow());
     }

@@ -3,20 +3,36 @@ package com.azarenka.words.service.word;
 import com.azarenka.words.domain.Language;
 import com.azarenka.words.domain.Word;
 import com.azarenka.words.file.WordReader;
-import com.azarenka.words.validator.Validator;
-import javafx.scene.Scene;
-import javafx.stage.FileChooser;
+import com.azarenka.words.validator.WordsFileValidator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.scene.Scene;
+import javafx.stage.FileChooser;
+
+/**
+ * Implementation of {@link IWordService}.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class WordService implements IWordService {
 
@@ -29,7 +45,7 @@ public class WordService implements IWordService {
     @Autowired
     private WordReader wordReader;
     @Autowired
-    private Validator validator;
+    private WordsFileValidator validator;
 
     private final List<Word> todayWords = new ArrayList<>();
     private final List<Word> words = new ArrayList<>();
@@ -46,15 +62,15 @@ public class WordService implements IWordService {
 
     private Language getCurrentLanguage(Language language) {
         return Language.ALL == language
-                ? (int) (Math.random() * 100) % 2 == 0 ? Language.EN : Language.RU
-                : language;
+            ? (int) (Math.random() * 100) % 2 == 0 ? Language.EN : Language.RU
+            : language;
     }
 
     @Override
     public String getTranslate() {
         return Language.EN == currentLanguage
-                ? currentWord.getTranslate()
-                : currentWord.getWord();
+            ? currentWord.getTranslate()
+            : currentWord.getWord();
     }
 
     @Override
@@ -83,6 +99,7 @@ public class WordService implements IWordService {
 
     /**
      * Returns count of loaded words. If file wasn't loaded return -1
+     *
      * @param scene
      * @return
      */
@@ -90,7 +107,7 @@ public class WordService implements IWordService {
     public int uploadFile(Scene scene) {
         int countWords = -1;
         File file = chooseFile(scene);
-        if(Objects.nonNull(file)) {
+        if (Objects.nonNull(file)) {
             List<Word> words = load();
             List<Word> loadedWords = readFile(file);
             words.addAll(loadedWords);

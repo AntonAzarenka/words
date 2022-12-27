@@ -1,15 +1,26 @@
 package com.azarenka.words.service.tableview;
 
 import com.azarenka.words.domain.Word;
-import javafx.collections.FXCollections;
-import javafx.scene.control.TableView;
+
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.TableView;
+
+/**
+ * Implementation of {@link ITableManager}.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
-public class WordsTableManager implements ITableManager<Word>{
+public class WordsTableManager implements ITableManager<Word> {
 
     private Set<Word> words = new HashSet<>();
 

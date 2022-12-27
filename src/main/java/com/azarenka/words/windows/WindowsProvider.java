@@ -1,6 +1,7 @@
 package com.azarenka.words.windows;
 
-import com.azarenka.words.windows.scenes.*;
+import com.azarenka.words.windows.scenes.MainWindow;
+import com.azarenka.words.windows.scenes.OptionsWindow;
 import com.azarenka.words.windows.scenes.user.CreateUserWindow;
 import com.azarenka.words.windows.scenes.user.DeleteUserWindow;
 import com.azarenka.words.windows.scenes.user.EditUserWindow;
@@ -8,9 +9,19 @@ import com.azarenka.words.windows.scenes.user.ParticipantWindow;
 import com.azarenka.words.windows.scenes.wordbook.CreateWordWindow;
 import com.azarenka.words.windows.scenes.wordbook.EditWordWindow;
 import com.azarenka.words.windows.scenes.wordbook.WordBookWindow;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Represents class for providing windows in controllers.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class WindowsProvider {
 

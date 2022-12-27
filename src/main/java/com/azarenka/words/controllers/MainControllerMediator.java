@@ -1,12 +1,22 @@
 package com.azarenka.words.controllers;
 
-import com.azarenka.words.domain.Participant;
 import com.azarenka.words.domain.Language;
 import com.azarenka.words.domain.Options;
+import com.azarenka.words.domain.Participant;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Represents of main controller mediator.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 public class MainControllerMediator {
 
     private JFXButton wordButton;
@@ -19,7 +29,8 @@ public class MainControllerMediator {
 
     public MainControllerMediator(JFXButton wordButton, JFXButton translateButton, JFXButton payButton,
                                   JFXButton secondAttempt, JFXButton nextContributor,
-                                  JFXComboBox<Language> languageComboBox,  JFXComboBox<Participant> contributorComboBox) {
+                                  JFXComboBox<Language> languageComboBox,
+                                  JFXComboBox<Participant> contributorComboBox) {
         this.wordButton = wordButton;
         this.translateButton = translateButton;
         this.wrongButton = payButton;
@@ -44,15 +55,15 @@ public class MainControllerMediator {
         nextContributor.setDisable(hasNext);
     }
 
-    public void setState(MainController controller) {
+    public void setState(MainWindowController controller) {
         wordButton.setDisable(!StringUtils.isEmpty(controller.wordField.getText())
-                && StringUtils.isEmpty(controller.wordTranslate.getText()));
+            && StringUtils.isEmpty(controller.wordTranslate.getText()));
         translateButton.setDisable(StringUtils.isEmpty(controller.wordField.getText())
-                || !StringUtils.isEmpty(controller.wordTranslate.getText()));
+            || !StringUtils.isEmpty(controller.wordTranslate.getText()));
         wrongButton.setDisable(!StringUtils.isEmpty(controller.wordField.getText())
-                && StringUtils.isEmpty(controller.wordTranslate.getText()));
+            && StringUtils.isEmpty(controller.wordTranslate.getText()));
         secondAttempt.setDisable(!StringUtils.isEmpty(controller.wordField.getText())
-                && StringUtils.isEmpty(controller.wordTranslate.getText()));
+            && StringUtils.isEmpty(controller.wordTranslate.getText()));
     }
 
     public void setWordButton(JFXButton wordButton) {

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane prefHeight="84.0" prefWidth="1280.0" style="-fx-background-color: #2a2246;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="107.0" prefHeight="54.0" prefWidth="270.0" text="WORDS" textFill="#b1a4a4">
+               <font>
+                  <Font name="Bookman Old Style" size="39.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="contributorComboBox" accessibleRole="CHECK_MENU_ITEM" focusColor="WHITE" labelFloat="true" layoutX="107.0" layoutY="57.0" prefHeight="26.0" prefWidth="215.0" promptText="Choose participant" style="-fx-scale-y: 0.7;" unFocusColor="WHITE" viewOrder="5.0" />
+            <JFXComboBox fx:id="languageComboBox" labelFloat="true" layoutX="360.0" layoutY="54.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="26.0" prefWidth="245.0" promptText="Language" style="-jfx-focus-color: white; -fx-scale-y: 0.7;" unFocusColor="WHITE" viewOrder="5.0">
+               <focusColor>
+                  <RadialGradient centerX="0.5" centerY="0.7045454400958437" cycleMethod="REFLECT" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </focusColor>
+            </JFXComboBox>
+         </children>
+      </AnchorPane>
+   </top>
+   <left>
+      <AnchorPane prefHeight="716.0" prefWidth="100.0" style="-fx-background-color: #130938;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="25.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../com/azarenka/words/icons/house.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="25.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../com/azarenka/words/icons/add-user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="25.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../com/azarenka/words/icons/add-file.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="25.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../com/azarenka/words/icons/analytics.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="25.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../com/azarenka/words/icons/gear.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="25.0" layoutY="384.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../com/azarenka/words/icons/reload.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+   <right>
+      <AnchorPane prefHeight="614.0" prefWidth="412.0" BorderPane.alignment="CENTER">
+         <children>
+            <BarChart alternativeColumnFillVisible="true" layoutX="15.0" layoutY="40.0" prefHeight="251.0" prefWidth="382.0" title="words/days">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
+            <Label layoutX="188.0" layoutY="14.0" prefHeight="18.0" prefWidth="167.0" text="Statistic" />
+            <PieChart layoutX="15.0" layoutY="325.0" prefHeight="307.0" prefWidth="386.0" title="Common statistic" />
+         </children>
+      </AnchorPane>
+   </right>
+   <bottom>
+      <AnchorPane prefHeight="38.0" prefWidth="1280.0" style="-fx-background-color: #130938;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="100.0" layoutY="11.0" prefHeight="18.0" prefWidth="130.0" text="Count words: 952" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label layoutX="207.0" layoutY="10.0" prefHeight="18.0" prefWidth="130.0" text="Count participants: 12" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label layoutX="337.0" layoutY="10.0" prefHeight="18.0" prefWidth="250.0" text="Current purticipant: Anton Azarenka" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>

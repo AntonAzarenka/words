@@ -3,6 +3,15 @@ package com.azarenka.words.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Represents of Word domain object.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 public class Word implements Serializable {
 
     private String word;
@@ -31,11 +40,15 @@ public class Word implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Word word1 = (Word) o;
         return Objects.equals(word, word1.word) &&
-                Objects.equals(translate, word1.translate);
+            Objects.equals(translate, word1.translate);
     }
 
     @Override
@@ -46,8 +59,8 @@ public class Word implements Serializable {
     @Override
     public String toString() {
         return "Word{" +
-                "word='" + word + '\'' +
-                ", translate='" + translate + '\'' +
-                '}';
+            "word='" + word + '\'' +
+            ", translate='" + translate + '\'' +
+            '}';
     }
 }

@@ -4,6 +4,15 @@ import com.azarenka.javafx.SceneChanger;
 import com.azarenka.javafx.load.CommonWidget;
 import org.springframework.stereotype.Component;
 
+/**
+ * Represents class for changing scenes.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class WindowsChanger extends SceneChanger {
 

@@ -8,9 +8,19 @@ import com.azarenka.words.service.participants.ParticipantService;
 import com.azarenka.words.service.tableview.ITableManager;
 import com.azarenka.words.service.trigger.RefreshService;
 import com.azarenka.words.service.word.IWordService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Service provider.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class ServiceProvider {
 

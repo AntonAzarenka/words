@@ -4,10 +4,7 @@ import com.azarenka.words.controllers.CommonController;
 import com.azarenka.words.domain.Word;
 import com.azarenka.words.file.ResourceProvider;
 import com.azarenka.words.service.util.Windows;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +13,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+
+/**
+ * Represents of work book controller.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 @Component
 public class WorkBookController extends CommonController {
 
@@ -39,9 +50,9 @@ public class WorkBookController extends CommonController {
         Word selectedItem = tableWords.getSelectionModel().getSelectedItem();
         if (Objects.nonNull(selectedItem)) {
             boolean answer = Windows.showConfirmationWindow("Delete Window",
-                    String.format("Are you really want to delete '%s - %s' word", selectedItem.getWord(),
-                            selectedItem.getTranslate()), StringUtils.EMPTY);
-            if(answer){
+                String.format("Are you really want to delete '%s - %s' word", selectedItem.getWord(),
+                    selectedItem.getTranslate()), StringUtils.EMPTY);
+            if (answer) {
                 List<Word> words = provider.getWordService().load();
                 words.remove(selectedItem);
                 provider.getWordService().save(words);
@@ -68,17 +79,18 @@ public class WorkBookController extends CommonController {
 
     public void load() {
         int countWords = provider.getWordService().uploadFile(windowsProvider.getWordBookWindow().getScene());
-        if(countWords > -1) {
-            Windows.showNotificationWindow("Information", "File was uploaded", String.format("%s word was added", countWords));
+        if (countWords > -1) {
+            Windows.showNotificationWindow("Information", "File was uploaded",
+                String.format("%s word was added", countWords));
             provider.getRefreshService().setRefreshWordWindowProperty(
-                    !provider.getRefreshService().isRefreshWordWindowProperty());
+                !provider.getRefreshService().isRefreshWordWindowProperty());
         }
     }
 
     @Override
     protected void loadData() {
         provider.getRefreshService().refreshWordWindowPropertyProperty().addListener(
-                (observableValue, aBoolean, t1) -> refresh());
+            (observableValue, aBoolean, t1) -> refresh());
         wordTableColumn.setCellValueFactory(new PropertyValueFactory<>("word"));
         translateTableColumn.setCellValueFactory(new PropertyValueFactory<>("translate"));
         provider.getWordsTableManager().refresh(new HashSet<>(provider.getWordService().load()), tableWords);

@@ -2,6 +2,15 @@ package com.azarenka.words.domain;
 
 import java.io.Serializable;
 
+/**
+ * Represents of options domain object.
+ * <p>
+ * Copyright (C) 2022 antazarenko@gmail.com
+ * <p>
+ * Date: 12/26/2022
+ *
+ * @author Anton Azarenka
+ */
 public class Options implements Serializable {
 
     private Boolean randomParticipantFlag;
